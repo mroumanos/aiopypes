@@ -1,8 +1,54 @@
 [build-system]
-requires = ["flit_core >=3.2,<4"]
-build-backend = "flit_core.buildapi"
+requires      = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [project]
-name = "pypes"
-authors = [{name = "mroumanos", email = "mroumanos@pm.me"}]
-dynamic = ["version", "description"]
+name = "aiopypes"
+version = "0.0.4"
+description = "Scalable async pipelines in Python, made easy"
+authors = [
+    {name = "mroumanos", email = "mroumanos@pm.me"}
+]
+readme = "README.md"
+license = { file = "LICENSE" }
+classifiers = [
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: OS Independent"
+]
+keywords = [
+    "asyncio",
+    "pipeline",
+    "pipe",
+    "stream"
+]
+dependencies = [
+    'tomli; python_version < "3.11"',
+]
+requires-python = ">=3.5.9"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "bumpver",
+    "isort",
+    "pip-tools",
+    "pytest"
+]
+
+[project.urls]
+Homepage = "https://github.com/mroumanos/pypes"
+Documentation = "https://async-pypes.readthedocs.io"
+Repository = "https://github.com/mroumanos/pypes.git"
+
+[project.scripts]
+realpython = "reader.__main__:main"

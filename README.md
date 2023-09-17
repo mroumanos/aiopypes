@@ -1,4 +1,4 @@
-![Alt text](/docs/_static/logo.png)
+![p-y-p-e-s](https://raw.githubusercontent.com/mroumanos/pypes/e4af0f031ca56ac53c3e9ab15fd7c15bab084030/docs/_static/logo.png)
 
 <h3 align="center">(pronounced "pipes")</h3>
 
@@ -116,16 +116,17 @@ if __name__ == '__main__':
 
     pipeline.run()
 ```
-For more, see [readthedocs](https://async-pypes.readthedocs.io/en/latest/index.html)
+For more, see [readthedocs](https://async-pypes.readthedocs.io)
 
 ### Prerequisites
 
 `pypes` is based on pure Python (3.5+) and does not require other dependencies.
 
 ### Installing
+Available on PyPi [here](https://pypi.org/project/aiopypes), installed with pip:
 
 ```
-pip install pypes
+pip install aiopypes
 ```
 
 ## 🔧 Running the tests <a name = "tests"></a>

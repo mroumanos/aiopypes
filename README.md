@@ -116,7 +116,7 @@ if __name__ == '__main__':
 
     pipeline.run()
 ```
-For more, see [readthedocs](https://async-pypes.readthedocs.io)
+For more, see [readthedocs](https://aiopypes.readthedocs.io)
 
 ### Prerequisites
 

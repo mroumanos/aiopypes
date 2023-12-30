@@ -1,4 +1,4 @@
-![a-i-o-p-y-p-e-s](https://raw.githubusercontent.com/mroumanos/aiopypes/e4af0f031ca56ac53c3e9ab15fd7c15bab084030/docs/_static/logo.png)
+![a-i-o-p-y-p-e-s](https://raw.githubusercontent.com/mroumanos/aiopypes/master/docs/_static/logo.png)
 
 <h3 align="center">(pronounced "a-i-o-pipes")</h3>
 

@@ -143,12 +143,7 @@ class Task:
         """
         if route in self.routes:
             index = self.routes.index(route)
-            if not (index > len(output) - 1):
-                if len(obj[1:]) == 1:
-                    obj = obj[1]
-                else:
-                    obj = obj[1:]
-                return [self.output[index]]
+            return [self.output[index]]
 
         return output
 
@@ -160,11 +155,15 @@ class Task:
         """
         output = self.output
 
-        if self.balancer:
+        if self.routes:
+            output = self.multiplex(obj[0], output)
+            if len(obj[1:]) == 1:
+                obj = obj[1]
+            else:
+                obj = obj[1:]
+
+        elif self.balancer:
             output = self.balancer.balance(self.output)
-        
-        elif self.routes:
-            output = self.multiplex(obj[0])
 
         enqueue = [o.input.enqueue(obj) for o in output]
 

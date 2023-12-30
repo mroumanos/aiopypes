@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: aiopypes
-Version: 1.0.0
+Version: 1.0.2
 Summary: Scalable async pipelines in Python, made easy
 Author-email: mroumanos <mroumanos@pm.me>
 License: MIT License

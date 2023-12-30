@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aiopypes"
-version = "1.0.0"
+version = "1.0.2"
 description = "Scalable async pipelines in Python, made easy"
 authors = [
     {name = "mroumanos", email = "mroumanos@pm.me"}

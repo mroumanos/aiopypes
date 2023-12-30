@@ -4,25 +4,19 @@ import asyncio
 class Pipeline:
 
     def __init__(self,
-                 loop: asyncio.BaseEventLoop,
                  tasks: list = []):
         """
-        The `__init__` function initializes an object with a given event loop and a list of tasks, and
+        The `__init__` function initializes an object with a given a list of tasks, and
         sets up some instance variables.
         
         Args:
-          loop (asyncio.BaseEventLoop): The `loop` parameter is an instance of the
-        `asyncio.BaseEventLoop` class. It represents the event loop that drives the execution of
-        asynchronous tasks in your code. The event loop is responsible for scheduling and executing
-        coroutines, callbacks, and other asynchronous operations.
           tasks (list): The `tasks` parameter is a list of tasks that will be executed by the code. Each
         task is represented as a dictionary with various properties.
         """
-        self.loop = loop
         self.scope = []
         self.tasks = []
         self.jobs = []
-        self.lock = asyncio.Lock(loop=loop)
+        self.lock = asyncio.Lock()
         if tasks:
             for task in tasks:
                 t = task.copy()
@@ -149,33 +143,35 @@ class Pipeline:
             curses.nocbreak()
             curses.endwin()
 
-    def run(self, graph: bool = False):
+    async def run_async(self, graph: bool = False):
+    
+        try:
+            async with asyncio.TaskGroup() as tg:
+                for task in self.tasks:
+                    job = tg.create_task(task.run_async())
+                    self.jobs.append(job)
+                if graph:
+                    job = tg.create_task(self.graph())
+                    self.jobs.append(job)
+                print("Application started (press Ctrl+C to close)")
+        finally:
+            try:
+                print("Closing tasks gracefully")
+                await self.lock.acquire()
+                print("Killswitch acquired")
+                closures = [asyncio.wait_for(job, timeout=10) for job in self.jobs]
+                await asyncio.gather(*closures)
+                print("All tasks closed gracefully")
+            except asyncio.TimeoutError:
+                print("Tasks failed to close")
+            except asyncio.CancelledError:
+                print("Tasks already closed")
+
+    def run(self, **kwargs):
         """
         The `run` function runs a series of tasks asynchronously and handles graceful closure of the tasks.
         """
         try:
-            for task in self.tasks:
-                job = self.loop.create_task(task.run_async())
-                self.jobs.append(job)
-            
-            if graph:
-                job = self.loop.create_task(self.graph())
-                self.jobs.append(job)
-            print("Application started (press Ctrl+C to close)")
-            self.loop.run_forever()
+            asyncio.run(self.run_async(**kwargs))
         except KeyboardInterrupt:
-            print("Exiting from program...")
-        finally:
-            try:
-                print("Closing tasks gracefully")
-                self.loop.run_until_complete(self.lock.acquire())
-                closures = [asyncio.wait_for(job, timeout=10) for job in self.jobs]
-                self.loop.run_until_complete(asyncio.gather(*closures))
-                print("All tasks closed gracefully")
-            except asyncio.TimeoutError:
-                print("Failed to close jobs gracefully, force closing")
-                for job in self.jobs:
-                    job.cancel()
-                waits = [asyncio.wait_for(job, timeout=10) for job in self.jobs]
-                self.loop.run_until_complete(asyncio.gather(*waits))
-                print("Jobs force closed")
+            print("Pipeline application shut down by user")

@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'pypes'
+project = 'aiopypes'
 copyright = '2023, Mike Roumanos'
 author = 'Mike Roumanos'
 release = '00.00.01'

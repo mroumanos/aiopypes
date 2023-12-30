@@ -5,16 +5,16 @@
 
     .. code-block:: python
 
-        import pypes
+        import aiopypes
 
         import asyncio
 
         import time
 
-        from pypes.balance import CongestionLoadBalancer, RoundRobinLoadBalancer
+        from aiopypes.balance import CongestionLoadBalancer, RoundRobinLoadBalancer
 
 
-        app = pypes.App()
+        app = aiopypes.App()
 
         @app.task(interval=0.01)
         async def every_second():
@@ -22,29 +22,29 @@
 
 
         @app.task(balancer=RoundRobinLoadBalancer())
-        async def route_a(input: pypes.Stream):
+        async def route_a(input: aiopypes.Stream):
             async for sleep in input:
                 yield 'A', sleep
 
         @app.task(balancer=CongestionLoadBalancer())
-        async def route_b(input: pypes.Stream):
+        async def route_b(input: aiopypes.Stream):
             async for sleep in input:
                 yield 'B', sleep
 
         @app.task(scale=1)
-        async def task1(input: pypes.Stream):
+        async def task1(input: aiopypes.Stream):
             async for router, sleep in input:
                 await asyncio.sleep(5 * sleep)
                 yield router, 1, input.queue.qsize()
 
         @app.task(scale=50)
-        async def task2(input: pypes.Stream):
+        async def task2(input: aiopypes.Stream):
             async for router, sleep in input:
                 await asyncio.sleep(5 * sleep)
                 yield router, 2, input.queue.qsize()
 
         @app.task()
-        async def receive(input: pypes.Stream):
+        async def receive(input: aiopypes.Stream):
 
             class Observer:
                 task1_proc = 0
@@ -113,16 +113,16 @@
 
             pipeline.run()
 """
-import pypes
+import aiopypes
 
 import asyncio
 
 import time
 
-from pypes.balance import CongestionLoadBalancer, RoundRobinLoadBalancer
+from aiopypes.balance import CongestionLoadBalancer, RoundRobinLoadBalancer
 
 
-app = pypes.App()
+app = aiopypes.App()
 
 @app.task(interval=0.01)
 async def every_second():
@@ -130,29 +130,29 @@ async def every_second():
 
 
 @app.task(balancer=RoundRobinLoadBalancer())
-async def route_a(input: pypes.Stream):
+async def route_a(input: aiopypes.Stream):
     async for sleep in input:
         yield 'A', sleep
 
 @app.task(balancer=CongestionLoadBalancer())
-async def route_b(input: pypes.Stream):
+async def route_b(input: aiopypes.Stream):
     async for sleep in input:
         yield 'B', sleep
 
 @app.task(scale=1)
-async def task1(input: pypes.Stream):
+async def task1(input: aiopypes.Stream):
     async for router, sleep in input:
         await asyncio.sleep(5 * sleep)
         yield router, 1, input.queue.qsize()
 
 @app.task(scale=50)
-async def task2(input: pypes.Stream):
+async def task2(input: aiopypes.Stream):
     async for router, sleep in input:
         await asyncio.sleep(5 * sleep)
         yield router, 2, input.queue.qsize()
 
 @app.task()
-async def receive(input: pypes.Stream):
+async def receive(input: aiopypes.Stream):
 
     class Observer:
         task1_proc = 0

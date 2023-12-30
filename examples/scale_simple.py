@@ -14,16 +14,16 @@
     .. code-block:: python
 
         import asyncio
-        import pypes
+        import aiopypes
 
-        app = pypes.App()
+        app = aiopypes.App()
 
 
         @app.task(interval=0.01)
         async def task0():
             return 0.1
 
-        @app.task(scaler=pypes.scale.TanhTaskScaler())
+        @app.task(scaler=aiopypes.scale.TanhTaskScaler())
         async def task1(stream):
             async for s in stream:
                 await asyncio.sleep(s)
@@ -42,16 +42,16 @@
             pipeline.run()
 """
 import asyncio
-import pypes
+import aiopypes
 
-app = pypes.App()
+app = aiopypes.App()
 
 
 @app.task(interval=0.01)
 async def task0():
     return 0.1
 
-@app.task(scaler=pypes.scale.TanhTaskScaler())
+@app.task(scaler=aiopypes.scale.TanhTaskScaler())
 async def task1(stream):
     async for s in stream:
         await asyncio.sleep(s)

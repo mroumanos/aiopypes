@@ -1,19 +1,19 @@
-![p-y-p-e-s](https://raw.githubusercontent.com/mroumanos/pypes/e4af0f031ca56ac53c3e9ab15fd7c15bab084030/docs/_static/logo.png)
+![a-i-o-p-y-p-e-s](https://raw.githubusercontent.com/mroumanos/aiopypes/e4af0f031ca56ac53c3e9ab15fd7c15bab084030/docs/_static/logo.png)
 
-<h3 align="center">(pronounced "pipes")</h3>
+<h3 align="center">(pronounced "a-i-o-pipes")</h3>
 
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/mroumanos/pypes)](https://github.com/mroumanos/pypes/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/mroumanos/pypes)](https://github.com/mroumanos/pypes/pulls)
+[![GitHub Issues](https://img.shields.io/github/issues/mroumanos/aiopypes)](https://github.com/mroumanos/aiopypes/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/mroumanos/aiopypes)](https://github.com/mroumanos/aiopypes/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
 
 ---
 
-<p align="center"> Scalable async pipelines in Python, made easy.
+<p align="center"> Scalable asyncio pipelines in Python, made easy.
     <br> 
 </p>
 
@@ -38,9 +38,9 @@ with minimal hardware and coding, to process 10k+/s on production loads.
 
 Simple pipelines
 ```
-import pypes
+import aiopypes
 
-app = pypes.App()
+app = aiopypes.App()
 
 @app.task(interval=1.0)
 async def every_second():
@@ -62,16 +62,16 @@ if __name__ == '__main__':
 
 To scaled pipelines
 ```
-import pypes
+import aiopypes
 import aiohttp
 
-app = pypes.App()
+app = aiopypes.App()
 
 @app.task(interval=0.1)
 async def every_second():
     return "http://www.google.com"
 
-@app.task(scaler=pypes.scale.TanhTaskScaler()) #  this scales workers automatically to consume incoming requests
+@app.task(scaler=aiopypes.scale.TanhTaskScaler()) #  this scales workers automatically to consume incoming requests
 async def task1(stream):
     async for s in stream:
         yield await aiohttp.get(s)
@@ -95,9 +95,9 @@ if __name__ == '__main__':
 
 Start with a simple pipeline, and build out from there!
 ```
-import pypes
+import aiopypes
 
-app = pypes.App()
+app = aiopypes.App()
 
 @app.task(interval=1.0)
 async def every_second():
@@ -120,7 +120,7 @@ For more, see [readthedocs](https://aiopypes.readthedocs.io)
 
 ### Prerequisites
 
-`pypes` is based on pure Python (3.5+) and does not require other dependencies.
+`aiopypes` is based on pure Python (3.5+) and does not require other dependencies.
 
 ### Installing
 Available on PyPi [here](https://pypi.org/project/aiopypes), installed with pip:
@@ -145,12 +145,12 @@ To be created!
 
 Import the library
 ```
-import pypes
+import aiopypes
 ```
 
 Create an App object
 ```
-app = pypes.App()
+app = aiopypes.App()
 ```
 
 Create a trigger task

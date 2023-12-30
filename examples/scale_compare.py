@@ -1,5 +1,5 @@
 """
-    This script demonstrates the benefit of autoscaling in *pypes*. 
+    This script demonstrates the benefit of autoscaling in *aiopypes*. 
     Similar to the simple script, a timed task (hundred_per_second) 
     emits results at a rate faster than the downstream tasks (tortoise, 
     hare) can initially process. The hare immediately scaled to the 
@@ -13,31 +13,31 @@
 
     .. code-block:: python
 
-        import pypes
+        import aiopypes
 
         import asyncio
 
-        app = pypes.App()
+        app = aiopypes.App()
 
 
         @app.task(interval=0.01)
         async def hundred_per_second():
             return 0.1
 
-        @app.task(scaler=pypes.scale.TanhTaskScaler())
-        async def tortoise(input: pypes.Stream):
+        @app.task(scaler=aiopypes.scale.TanhTaskScaler())
+        async def tortoise(input: aiopypes.Stream):
             async for sleep in input:
                 await asyncio.sleep(sleep)
                 yield True
 
         @app.task(scale=10)
-        async def hare(input: pypes.Stream):
+        async def hare(input: aiopypes.Stream):
             async for sleep in input:
                 await asyncio.sleep(sleep)
                 yield False
 
         @app.task()
-        async def score(input: pypes.Stream):
+        async def score(input: aiopypes.Stream):
             tortoise_pos = 0
             hare_pos = 0
             async for result in input:
@@ -76,31 +76,31 @@
 
             pipeline.run()
 """
-import pypes
+import aiopypes
 
 import asyncio
 
-app = pypes.App()
+app = aiopypes.App()
 
 
 @app.task(interval=0.01)
 async def hundred_per_second():
     return 0.1
 
-@app.task(scaler=pypes.scale.TanhTaskScaler())
-async def tortoise(input: pypes.Stream):
+@app.task(scaler=aiopypes.scale.TanhTaskScaler())
+async def tortoise(input: aiopypes.Stream):
     async for sleep in input:
         await asyncio.sleep(sleep)
         yield True
 
 @app.task(scale=30)
-async def hare(input: pypes.Stream):
+async def hare(input: aiopypes.Stream):
     async for sleep in input:
         await asyncio.sleep(sleep)
         yield False
 
 @app.task()
-async def score(input: pypes.Stream):
+async def score(input: aiopypes.Stream):
     tortoise_pos = 0
     hare_pos = 0
     async for result in input:

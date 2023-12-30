@@ -5,20 +5,12 @@ from .task import Task
 
 class App:
 
-    def __init__(self,
-                 loop=None):
+    def __init__(self):
         """
-        Initializes a class instance with an event loop, using the default event loop if none
-        is provided.
-        
-        Args:
-          loop: An asyncio event loop to run all child tasks off. If a loop is not provided, it will use the default event loop obtained
-        from `asyncio.get_event_loop()`.
+        Initializes a class instance. Since event loop is no longer required, this is
+        an empty constructor.
         """
-
-        if not loop:
-            loop = asyncio.get_event_loop()
-        self.loop = loop
+        pass
 
     def task(self, **kwargs):
         """
@@ -45,7 +37,6 @@ class App:
             return Task(
                 name=function.__name__,
                 function=function,
-                loop=self.loop,
                 **kwargs
             )
 

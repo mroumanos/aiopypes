@@ -4,15 +4,15 @@ API
 .. code-block:: python
 
    import asyncio
-   import pypes
+   import aiopypes
 
-   app = pypes.App()
+   app = aiopypes.App()
 
    @app.task(interval=0.01)
    async def task0():
       return 0.1
 
-   @app.task(scaler=pypes.TanhTaskScaler())
+   @app.task(scaler=aiopypes.TanhTaskScaler())
    async def task1(stream):
       async for s in stream:
          yield await asyncio.sleep(s)
@@ -29,7 +29,7 @@ API
 app
 ----------------
 
-.. automodule:: pypes.app
+.. automodule:: aiopypes.app
    :members:
    :undoc-members:
    :show-inheritance:
@@ -37,7 +37,7 @@ app
 balance
 --------------------
 
-.. automodule:: pypes.balance
+.. automodule:: aiopypes.balance
    :members:
    :undoc-members:
    :show-inheritance:
@@ -45,7 +45,7 @@ balance
 pipeline
 ---------------------
 
-.. automodule:: pypes.pipeline
+.. automodule:: aiopypes.pipeline
    :members:
    :undoc-members:
    :show-inheritance:
@@ -53,7 +53,7 @@ pipeline
 scale
 ------------------
 
-.. automodule:: pypes.scale
+.. automodule:: aiopypes.scale
    :members:
    :undoc-members:
    :show-inheritance:
@@ -61,7 +61,7 @@ scale
 signal
 -------------------
 
-.. automodule:: pypes.signal
+.. automodule:: aiopypes.signal
    :members:
    :undoc-members:
    :show-inheritance:
@@ -69,7 +69,7 @@ signal
 stream
 -------------------
 
-.. automodule:: pypes.stream
+.. automodule:: aiopypes.stream
    :members:
    :undoc-members:
    :show-inheritance:
@@ -77,7 +77,7 @@ stream
 task
 -----------------
 
-.. automodule:: pypes.task
+.. automodule:: aiopypes.task
    :members:
    :undoc-members:
    :show-inheritance:

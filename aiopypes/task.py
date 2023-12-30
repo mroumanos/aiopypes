@@ -23,7 +23,6 @@ class Task:
     def __init__(self,
                  name: str,
                  function: Callable,
-                 loop: asyncio.AbstractEventLoop,
                  lock: asyncio.Lock = None,
                  scale: int = None,
                  scaler: AbstractTaskScaler = None,
@@ -34,7 +33,6 @@ class Task:
         Args:
             name (str): _description_
             function (Callable): _description_
-            loop (asyncio.AbstractEventLoop): _description_
             lock (asyncio.Lock, optional): _description_. Defaults to None.
             scale (int, optional): _description_. Defaults to None.
             scaler (AbstractTaskScaler, optional): _description_. Defaults to None.
@@ -43,7 +41,6 @@ class Task:
         """
         self.name = name
         self.function = function
-        self.loop = loop
         self.lock = lock
         self.scaler = scaler
         self.balancer = balancer
@@ -56,7 +53,7 @@ class Task:
                 self.scaler = StaticTaskScaler(scale)
         if not balancer:
             self.balancer = DefaultLoadBalancer()
-        self.input = Stream(loop=loop)
+        self.input = Stream()
         self.output = []
         self.runners = []
         self.locks = []
@@ -68,7 +65,7 @@ class Task:
         Returns:
             _type_: _description_
         """
-        pipeline = Pipeline(loop=self.loop).extend(self)
+        pipeline = Pipeline().extend(self)
         return getattr(pipeline, "run")(**kwargs)
 
     def copy(self):
@@ -80,7 +77,6 @@ class Task:
         return self.__class__(
             name=self.name,
             function=self.function,
-            loop=self.loop,
             lock=self.lock,
             scaler=self.scaler.copy(),
             balancer=self.balancer.copy(),
@@ -93,7 +89,7 @@ class Task:
         Returns:
             _type_: _description_
         """
-        pipeline = Pipeline(loop=self.loop, tasks=[self])
+        pipeline = Pipeline(tasks=[self])
         return getattr(pipeline, "map")(*args, **kwargs)
 
     def reduce(self, *args, **kwargs):
@@ -102,7 +98,7 @@ class Task:
         Returns:
             _type_: _description_
         """
-        pipeline = Pipeline(loop=self.loop, tasks=[self])
+        pipeline = Pipeline(tasks=[self])
         return getattr(pipeline, "reduce")(*args, **kwargs)
 
     def get_timer_iter(self, *args, **kwargs):
@@ -197,7 +193,7 @@ class Task:
         ct = len(self.runners)
         name = f"{self.name}-{ct}"
         lock = asyncio.Lock()
-        runner = self.loop.create_task(self.run_async_single(name, lock), name=name)
+        runner = asyncio.create_task(self.run_async_single(name, lock), name=name)
         self.locks.append(lock)
         self.runners.append(runner)
 

@@ -7,15 +7,12 @@ class Stream:
     """_summary_
     """
 
-    def __init__(self,
-                 loop: asyncio.BaseEventLoop = None):
+    def __init__(self):
         """_summary_
 
         Args:
-            loop (asyncio.BaseEventLoop, optional): _description_. Defaults to None.
         """
-        self.loop = loop
-        self.queue = asyncio.Queue(loop=loop)
+        self.queue = asyncio.Queue()
 
     async def enqueue(self, val: object) -> None:
         """_summary_

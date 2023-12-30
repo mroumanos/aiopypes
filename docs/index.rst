@@ -1,15 +1,15 @@
-.. pypes documentation master file, created by
+.. aiopypes documentation master file, created by
    sphinx-quickstart on Tue Sep  5 08:17:52 2023.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to pypes's documentation!
-=================================
+Welcome to aiopypes's documentation!
+====================================
 
 .. image:: _static/logo.png
 
 What and why
-=================================
+====================================
 
 This package is designed for two main reason: (1) make building asynchronous 
 streams *easy* and (2) *maximize throughput* through automatic scaling and routing. 
@@ -39,7 +39,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   pypes
+   aiopypes
    examples
 
 Indices and tables

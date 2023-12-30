@@ -17,15 +17,15 @@
 
     .. code-block:: python
 
-        import pypes
+        import aiopypes
 
         import asyncio
 
         import time
 
-        from pypes.balance import RoundRobinLoadBalancer
+        from aiopypes.balance import RoundRobinLoadBalancer
 
-        app = pypes.App()
+        app = aiopypes.App()
 
 
         @app.task(interval=0.01, balancer=RoundRobinLoadBalancer())
@@ -33,19 +33,19 @@
             return 0.1
 
         @app.task(scale=1)
-        async def task1(input: pypes.Stream):
+        async def task1(input: aiopypes.Stream):
             async for sleep in input:
                 await asyncio.sleep(5 * sleep)
                 yield True, input.queue.qsize()
 
         @app.task(scale=50)
-        async def task2(input: pypes.Stream):
+        async def task2(input: aiopypes.Stream):
             async for sleep in input:
                 await asyncio.sleep(5 * sleep)
                 yield False, input.queue.qsize()
 
         @app.task()
-        async def receive(input: pypes.Stream):
+        async def receive(input: aiopypes.Stream):
             task1_proc = 0
             task1_size = 0
             task2_proc = 0
@@ -82,15 +82,15 @@
 
             pipeline.run()
 """
-import pypes
+import aiopypes
 
 import asyncio
 
 import time
 
-from pypes.balance import RoundRobinLoadBalancer
+from aiopypes.balance import RoundRobinLoadBalancer
 
-app = pypes.App()
+app = aiopypes.App()
 
 
 @app.task(interval=0.01, balancer=RoundRobinLoadBalancer())
@@ -98,19 +98,19 @@ async def every_second():
     return 0.1
 
 @app.task(scale=1)
-async def task1(input: pypes.Stream):
+async def task1(input: aiopypes.Stream):
     async for sleep in input:
         await asyncio.sleep(5 * sleep)
         yield True, input.queue.qsize()
 
 @app.task(scale=50)
-async def task2(input: pypes.Stream):
+async def task2(input: aiopypes.Stream):
     async for sleep in input:
         await asyncio.sleep(5 * sleep)
         yield False, input.queue.qsize()
 
 @app.task()
-async def receive(input: pypes.Stream):
+async def receive(input: aiopypes.Stream):
     task1_proc = 0
     task1_size = 0
     task2_proc = 0

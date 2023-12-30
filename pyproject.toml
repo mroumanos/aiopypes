@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aiopypes"
-version = "0.0.4"
+version = "1.0.0"
 description = "Scalable async pipelines in Python, made easy"
 authors = [
     {name = "mroumanos", email = "mroumanos@pm.me"}
@@ -16,13 +16,9 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.5",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Operating System :: OS Independent"
 ]
 keywords = [
@@ -32,9 +28,9 @@ keywords = [
     "stream"
 ]
 dependencies = [
-    'tomli; python_version < "3.11"',
+    'tomli; python_version >= "3.10"',
 ]
-requires-python = ">=3.5.9"
+requires-python = ">=3.10"
 
 [project.optional-dependencies]
 dev = [
@@ -46,9 +42,9 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/mroumanos/pypes"
-Documentation = "https://async-pypes.readthedocs.io"
-Repository = "https://github.com/mroumanos/pypes.git"
+Homepage = "https://github.com/mroumanos/aiopypes"
+Documentation = "https://aiopypes.readthedocs.io"
+Repository = "https://github.com/mroumanos/aiopypes.git"
 
 [project.scripts]
 realpython = "reader.__main__:main"

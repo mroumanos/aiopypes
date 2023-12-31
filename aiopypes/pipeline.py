@@ -40,10 +40,10 @@ class Pipeline:
         new_scope = []
 
         for scope in self.scope:
+            scope.routes = routes
             for task in tasks:
                 t = task.copy()
                 t.lock = self.lock
-                t.routes = routes
                 new_scope.append(t)
                 self.tasks.append(t)
                 scope.output.append(t)
